@@ -1,0 +1,99 @@
+body{
+    background-color: $med-neutral;
+    font-family: $primary-font;
+}
+
+
+.component--navbar {
+    background-color: $dk-neutral;
+    ul{
+        margin-bottom: 0;
+        justify-content: space-evenly;
+        width: 70%;
+        li {
+            list-style-type: none;
+            display: flex;
+            align-items: center;
+
+            a {
+                color: #fff;
+            }
+        }
+    }
+    
+}
+
+
+.component--index{
+    h1 {
+        font-weight: bold;
+    }
+}
+
+.component--story{
+    background-color: $lt-neutral;
+        img {
+            max-width: 100%;
+        }
+
+        h2 {
+            font-weight: bold;
+        }
+
+        .text--byline {
+            font-family: $secondary-font;
+            font-style: oblique;
+            color: $dk-complimentary;
+        }
+
+        .btn--basic, .badge--publication {
+            border-radius: 0px;
+            color: #fff;
+        }
+
+        .btn--read, .badge--publication {
+            background-color: $lt-complimentary;
+        }
+
+        .btn--bookmark {
+            background-color: $med-complimentary;
+        }
+
+        .btn--bookmark.bookmarked {
+            background-color: $lt-neutral;
+            color: $dk-neutral;
+        }
+
+    }
+
+
+
+
+    ul.user--dropdown{
+        color: #fff;
+        text-align: left;
+        width: 14%;
+        display: flex;
+        position: relative;
+        ul {
+            display: none;
+            position: absolute;
+            top:1.5rem;
+            z-index:99999;
+        }
+        li{
+            list-style-type:none;
+           // position: relative;
+            
+            &:hover > ul{
+                display: block;
+                margin: 0;
+                padding:0;
+                background-color: $dk-neutral;
+            }
+
+            a{
+                padding: 4px 8px;
+            }
+        }
+    }

@@ -26,11 +26,13 @@ function App() {
     <HeaderWithContext />
       
       <Switch>
-          <PrivateRouteWithContext exact path="/" component={BroadcasterIndexWithContext} />
-          <PrivateRouteWithContext exact path="/ctv-edmonton" component={BroadcasterIndexWithContext} />
-          <PrivateRouteWithContext exact path="/edmonton-journal" component={BroadcasterIndexWithContext} />
-          <PrivateRouteWithContext exact path="/edmonton-sun" component={BroadcasterIndexWithContext} />
-          <PrivateRouteWithContext exact path="/cbc-edmonton" component={BroadcasterIndexWithContext} />
+
+    
+          <PrivateRouteWithContext exact path="/stories/:id" component={BroadcasterIndexWithContext} />
+          <PrivateRouteWithContext exact path="/ctv-edmonton/:id" component={BroadcasterIndexWithContext} />
+          <PrivateRouteWithContext exact path="/edmonton-journal/:id" component={BroadcasterIndexWithContext} />
+          <PrivateRouteWithContext exact path="/edmonton-sun/:id" component={BroadcasterIndexWithContext} />
+          <PrivateRouteWithContext exact path="/cbc-edmonton/:id" component={BroadcasterIndexWithContext} />
           <Route exact path="/signin" component={UserSignInWithContext} />
           <PrivateRouteWithContext exact path="/signout" component={UserSignOutWithContext} />
           <PrivateRouteWithContext exact path="/bookmarks" component={BroadcasterIndexWithContext} />

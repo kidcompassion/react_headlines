@@ -3,6 +3,12 @@ import axios from 'axios';
 
 export default class BroadcasterStory extends Component {
 
+
+	constructor(props){
+		super(props);
+		//console.log(props);
+	}
+
 	/**
 	 * Post to bookmark endpoint when btn is clicked
 	 * */
@@ -10,10 +16,31 @@ export default class BroadcasterStory extends Component {
   handleBookmark = (e) =>{
 		const selectedStoryId = this.props.storyDetails.id;
 		const currUserId = this.props.context.authenticatedUser.id;
-		axios.post(`http://localhost:5000/api/user/${currUserId}/create-bookmark/`, {storyId:selectedStoryId}).then();
+		
+		//if is all stories, get all stories
+		//if all bookmarks, get all bookmarks
+		//if all pubs, get all pubs
+		axios.post(`http://localhost:5000/api/user/${currUserId}/create-bookmark/`, {storyId:selectedStoryId}).then(()=>{
+		
+
+
+			if(this.props.currPage.path === '/stories/:id'){
+				this.props.triggerStories.getAllStories(this.props.currPage.params.id);
+			} else if(this.props.routerInfo.location.pathname === '/bookmarks'){
+				this.props.triggerStories.getAllBookmarks();
+			} else{
+				this.props.triggerStories.getPubStories(this.props.routerInfo.location.pathname);
+			}
+		
+		
+		
+		
+		});
+	
 	}
 
   render() {
+	 // console.log(this.props);
     return (
 			<article className="col-10 mx-auto text-left pt-3 pb-3 mb-3 component--story">
 				<div className="row card-body">

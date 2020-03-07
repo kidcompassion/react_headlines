@@ -16,7 +16,7 @@ const Header = (props) => {
 				<ul className="user--dropdown">
 						<li>{props.context.authenticatedUser.emailAddress} <i className="fa fa-chevron-down"></i> 
 								<ul>
-										<li><Link to="/bookmarks">Bookmarks</Link></li>
+										<li><Link to="/bookmarks/0">Bookmarks</Link></li>
 										<li><Link to="/signout">Sign Out</Link></li>
 								</ul>
 						</li> 		

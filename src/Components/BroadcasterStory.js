@@ -6,7 +6,7 @@ export default class BroadcasterStory extends Component {
 
 	constructor(props){
 		super(props);
-		//console.log(props);
+		console.log(props);
 	}
 
 	/**
@@ -21,13 +21,12 @@ export default class BroadcasterStory extends Component {
 		//if all bookmarks, get all bookmarks
 		//if all pubs, get all pubs
 		axios.post(`http://localhost:5000/api/user/${currUserId}/create-bookmark/`, {storyId:selectedStoryId}).then(()=>{
-		
-
-
+	
 			if(this.props.currPage.path === '/stories/:id'){
 				this.props.triggerStories.getAllStories(this.props.currPage.params.id);
-			} else if(this.props.routerInfo.location.pathname === '/bookmarks'){
-				this.props.triggerStories.getAllBookmarks();
+			} else if(this.props.currPage.path === "/bookmarks/:id"){
+				console.log('mytest');
+				this.props.triggerStories.getAllBookmarks(this.props.currPage.params.id);
 			} else{
 				this.props.triggerStories.getPubStories(this.props.routerInfo.location.pathname);
 			}

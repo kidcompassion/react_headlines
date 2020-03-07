@@ -35,7 +35,7 @@ function App() {
           <PrivateRouteWithContext exact path="/cbc-edmonton/:id" component={BroadcasterIndexWithContext} />
           <Route exact path="/signin" component={UserSignInWithContext} />
           <PrivateRouteWithContext exact path="/signout" component={UserSignOutWithContext} />
-          <PrivateRouteWithContext exact path="/bookmarks" component={BroadcasterIndexWithContext} />
+          <PrivateRouteWithContext exact path="/bookmarks/:id" component={BroadcasterIndexWithContext} />
           <Route exact path="/signup" component={UserSignUp} />
           
           <Route path="/forbidden" component={Forbidden} />

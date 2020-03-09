@@ -5,12 +5,12 @@ const Context = React.createContext();
 
 export class Provider extends Component {
 
-    constructor() {
-        super();
-        
+    constructor(props) {
+        super(props);
         // Set authenticated user to either null or the value from localstorage
         this.state = {
             authenticatedUser: JSON.parse(localStorage.getItem('authenticatedUser')) || null,
+            isLoggedIn: false,
             allStories: []
         };
     }
@@ -18,9 +18,11 @@ export class Provider extends Component {
     render() {
         
         const { authenticatedUser } = this.state;
+        const { isLoggedIn } = this.state;
         const { allStories } = this.state;
         const value = {
             authenticatedUser,
+            isLoggedIn,
             allStories,
             actions: {
                 signIn: this.signIn,
@@ -46,21 +48,33 @@ export class Provider extends Component {
      * Handles user sign in, and updates from the global space so we can trigger a state change that will update the header
      * {Object} User
      */
-    signIn = ( user )=>{
-     console.log(user);
+    signIn = async user =>{
+    // console.log(user);
         // Encode form values
         const encodedCredentials = btoa(`${user.emailAddress}:${user.password}`);
         // Set encoded values as authorization header in login request
         const authorized = axios.get('http://localhost:5000/api/users', { user, headers: {"Authorization" : `Basic ${encodedCredentials}`} });
         
-        authorized.then(                
+        await authorized.then(                
             (response) => { 
+               
+               this.setState({
+                   authenticatedUser: response.data,
+                   isLoggedIn: true
+                });
                 // once logged in, save user data in localStorage
                 localStorage.setItem('authenticatedUser', JSON.stringify(response.data));
                 // save encoded credentials for use in other API calls
                 localStorage.setItem('authHeader', encodedCredentials);
                 // Add authenticated user to the current state
-                this.setState({authenticatedUser: response.data});
+                
+               
+            }).then((response)=>{
+                //this.props.history.push('/stories/1');
+              // console.log(this.state);
+                //this.setState({authenticatedUser: response.data});
+              //  console.log('test', this);
+              //  this.props.history.push('/stories/1/');
             }).catch(
             (err)=>{
                 // If error, log it to the console
@@ -93,7 +107,9 @@ export class Provider extends Component {
      */
 
      async updateStories (){
-        await axios.post('http://localhost:5000/api/stories').then();
+         console.log('bloop');
+        await axios.post('http://localhost:5000/api/stories')
+                    .then((response)=>{console.log('from context', response)});
         
             //console.log(this.getAllStories());
         

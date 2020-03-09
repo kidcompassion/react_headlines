@@ -1,16 +1,51 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { Consumer } from './Context';
 
-export default ({ component: Component, ...rest }) => {
+
+
+  const PrivateRoute = ({ component: Comp, path, ...rest }) => {
+    
   return (
+    
+      <Route
+    {...rest}
+    render={props => {
+      //console.log(context)
+      console.log(rest)
+      return rest.context.authenticatedUser!== null ? (
+        <Comp {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: "/forbidden",
+            state: {
+              state: { from: props.location }
+            },
+          }}
+        />
+      );
+    }}
+  />
+    )}
+    
+    
+    
+    
+    
+    /*
     <Consumer>
       {context => (
+        
         <Route
           {...rest}
-          render={props => context.authenticatedUser ? (
+          
+          render={(props) => (
+            
+            context.authenticatedUser ? 
+              
               <Component {...props} />
-            ) : (
+              
+             : 
               <Redirect to={{
                 pathname: '/forbidden',
                 state: { from: props.location }
@@ -21,4 +56,6 @@ export default ({ component: Component, ...rest }) => {
     )}
     </Consumer>
   );
-};
+};*/
+
+export default PrivateRoute;

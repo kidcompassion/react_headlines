@@ -11,6 +11,7 @@ class UserSignIn extends React.Component{
 		}
 	}
 
+	
 	/**
 	 * Grab form input and put it into state
 	 */
@@ -20,20 +21,28 @@ class UserSignIn extends React.Component{
 		this.setState({
 				[name]: value 
 		});
+
+		
 	}
 		
 	/**
 	 * On submit, sign in via Context hoc
 	 */
-	handleSubmit = (e) =>{
+	handleSubmit = async e =>{
 			e.preventDefault();
-			this.props.context.actions.signIn(this.state);
+			
+				await this.props.context.actions.signIn(this.state);
+				this.props.history.push('/stories/1');
+				
+			
+			
+
 	}
 
   render(){
     return(
-      <div className="col-6 mx-auto">
-				<h1>Sign In</h1>
+      <div className="col-4 mx-auto pt-5">
+				<h1 className ="pb-3">Sign In</h1>
 				<form onSubmit={this.handleSubmit}>
 						<div className="form-group">
 								<label htmlFor="exampleInputEmail1">Email address</label>

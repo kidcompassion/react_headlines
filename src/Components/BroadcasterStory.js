@@ -6,7 +6,7 @@ export default class BroadcasterStory extends Component {
 
 	constructor(props){
 		super(props);
-		console.log(props);
+		//console.log(props);
 	}
 
 	/**
@@ -25,7 +25,7 @@ export default class BroadcasterStory extends Component {
 			if(this.props.currPage.path === '/stories/:id'){
 				this.props.triggerStories.getAllStories(this.props.currPage.params.id);
 			} else if(this.props.currPage.path === "/bookmarks/:id"){
-				console.log('mytest');
+				//console.log('mytest');
 				this.props.triggerStories.getAllBookmarks(this.props.currPage.params.id);
 			} else{
 				this.props.triggerStories.getPubStories(this.props.routerInfo.location.pathname);
@@ -41,7 +41,7 @@ export default class BroadcasterStory extends Component {
   render() {
 	 // console.log(this.props);
     return (
-			<article className="col-10 mx-auto text-left pt-3 pb-3 mb-3 component--story">
+			<article className="col-8 mx-auto text-left pt-3 pb-3 mb-3 component--story">
 				<div className="row card-body">
 					<div className="col-3"> <img src={this.props.storyDetails.imgUrl} alt="this.props.storyDetails.title"/></div>
 						<div className="col-9">

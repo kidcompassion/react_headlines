@@ -14,6 +14,7 @@ class BroadcasterIndex extends Component {
 			stories:[],
 			totalPages:null,
 			title:null,
+			lastUpdated: null,
 			actions:{
 				getPubStories: this.getPubStories,
 				getAllStories: this.getAllStories,
@@ -23,15 +24,16 @@ class BroadcasterIndex extends Component {
 	}
 
 	componentDidMount(){
+		this.lastUpdate();
 		// If user is logged in, load page contents based on the current url
 		if(this.props.context.authenticatedUser.emailAddress !== null){
 			if(this.props.match.path === '/stories/:id'){
-				console.log('mystories');
+				//console.log('mystories');
 				//console.log(this.props.match);
 				this.getAllStories(this.props.match.params.id);
 				this.setState({'title': 'All Stories'});
 			} else if(this.props.match.path === '/bookmarks/:id'){
-				console.log('mybooks');
+			//	console.log('mybooks');
 				this.getAllBookmarks(this.props.match.params.id);
 				this.setState({'title': 'Bookmarks'});
 			} else{
@@ -51,6 +53,7 @@ class BroadcasterIndex extends Component {
 		}
 	}
 
+	
 
 
 	/**
@@ -71,24 +74,21 @@ class BroadcasterIndex extends Component {
 		return parseInt(Math.ceil(allStories));
 	 }
 
-	 pubLookup = () =>{
-		 const allPubs = axios.get(`http://localhost:5000/api/publications`);
-	 }
 
 	/**
 	 * Executed on route change
 	 */
 	onRouteChanged = () =>{
-		console.log('change');
+	//	console.log('change');
 		
 		// On /bookmarks, get all bookmarked stories and change the page title
 		if(this.props.match.path ==="/bookmarks/:id"){
-			console.log('bookmarks');
+			//console.log('bookmarks');
 			this.getAllBookmarks(this.props.match.params.id);
 			this.setState({title: 'Bookmarks'});
 			//on root, get all stories from all pubs and change the page title
 		}else if(this.props.match.path ==="/stories/:id"){
-			console.log('stories');
+			//console.log('stories');
 				this.getAllStories(this.props.match.params.id);
 				this.setState({title: 'All Stories'});
 		}else {
@@ -197,7 +197,6 @@ class BroadcasterIndex extends Component {
 	 * Generates main feed of all stories from all pubs
 	 */
 	getAllStories = (currPage)=>{
-		
 		//Set up request for stories
 		const requestStories = axios.get(`http://localhost:5000/api/stories/${currPage}`);
 		//Set up request for current user's bookmarked stories
@@ -206,6 +205,7 @@ class BroadcasterIndex extends Component {
 		// .all allows for calling multiple endpoints
 		axios.all([requestStories, requestBookmarks]).then(axios.spread((...responses)=>{
 			console.log(responses);
+			console.log('does this work');
 			// Get all bookmarked story objects
 			let bookmarks = responses[1].data;
 			// Set up array to hold just the ids	
@@ -252,10 +252,24 @@ class BroadcasterIndex extends Component {
 		for(var i=0; i < totalPages; i++){
 
 			
-			pagination.push(<li className={parseInt(this.props.match.params.id) === i ? 'currentPage':''} key={i}><Link to={`${i}`}>{`${i}`}</Link> </li>)
+			pagination.push(<li className={`page-item ${parseInt(this.props.match.params.id) === i+1 ? 'currentPage':''}`} key={i}><Link className="page-link" to={`${i+1}`}>{`${i +1}`}</Link> </li>)
 		}
 		return pagination;
 	}
+
+
+	/**
+	 * Get latest date
+	 */
+
+	 lastUpdate = () =>{
+		 const lastUpdateAt = axios.get('http://localhost:5000/api/last-update');
+
+		 lastUpdateAt.then((results)=>{
+			 this.setState({ lastUpdated: results.data[0]});
+			//console.log(results.data[0]);
+		 })
+	 }
 
 	/**
 	 * Trigger scrape of latest stories from all XML feeds
@@ -264,29 +278,44 @@ class BroadcasterIndex extends Component {
 	handleSubmit=(event)=>{
 		event.preventDefault();
 		// Trigger the update func from context hoc
-		this.props.context.actions.updateStories();
+		//console.log('submit');
+		if(this.props.match.path === '/stories/:id'){
+			const updateStories = this.props.context.actions.updateStories();
+			updateStories.then(
+				()=>{
+					this.getAllStories(this.props.match.params.id);
+					this.setState({'title': 'All Stories'});
+				}
+			);
+		
+		} else if(this.props.match.path === '/bookmarks/:id'){
+			this.props.context.actions.updateStories();
+			this.getAllBookmarks(this.props.match.params.id);
+			this.setState({'title': 'Bookmarks'});
+		} else{
+			this.props.context.actions.updateStories();
+			this.getPubStories(this.props.location.pathname, this.props.match.params.id);
+			this.setState({title: this.formatTitle(this.props.location.pathname)});
+		}
 	}
 
   render() { 
-	//  console.log(this.state);
+	
     return (
             
-			<div className="row component--index">	
-				<div className="col-6 mt-5 mb-5">
-					<h1>{this.state.title}</h1>
+			<div className="row component--index justify-content-center">	
+				<div className="col-8 mt-5 mb-5 pl-0">
+					<h1 className="text-center">{this.state.title}</h1>
+					<p className="text-center">Last updated {this.state.lastUpdated !== null ? this.state.lastUpdated.updatedAt : 'error'} </p>
 				</div>
-				<div className="col-6">
-					<form onSubmit={this.handleSubmit} className="mt-5 mb-5">
-						<button className="btn btn-success" type="submit"><i className="fa fa-refresh fa-1x"></i> Refresh stories </button>
-					</form>
-				</div>					
+						
 					{this.state.stories.map((story, index)=>{
 						return(  <StoryWithContext currPage={this.props.match} routerInfo={this.props.history} triggerStories={this.state.actions} bookmarked={story.isBookmarked} key={story.id} storyDetails={story} />)
 					})}		
 					
 					
-				<div className="col-10 pt-5 pb-5 text-center mx-auto">
-					<ul className="component--pagination">
+				<div className="col-12 pt-5 pb-5 text-center">
+					<ul className="component--pagination pagination pagination-sm justify-content-center">
 							{this.createPagination(this.state.totalPages)}
 					</ul>
 				</div>

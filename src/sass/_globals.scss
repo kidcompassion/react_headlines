@@ -1,8 +1,21 @@
 body{
-    background-color: $med-neutral;
+    background-color:$lt-complimentary;
     font-family: $primary-font;
+    background-image: url('../polaroid.png');
+    background-blend-mode: multiply;
 }
 
+
+
+
+.App{
+    color: #fff;
+    a{
+        color: $lt-neutral;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+}
 
 .component--navbar {
     background-color: $dk-neutral;
@@ -17,6 +30,8 @@ body{
 
             a {
                 color: #fff;
+                font-weight: 300;
+                text-decoration: none;
             }
         }
     }
@@ -26,18 +41,26 @@ body{
 
 .component--index{
     h1 {
-        font-weight: bold;
-        text-transform: capitalize;
+        color: #fff;
+        font-weight: 300;
+        text-transform: uppercase;
+        text-align: left;
+        font-size: 2em;
     }
 }
 
 .component--story{
     background-color: $lt-neutral;
+    color: $dk-neutral;
+    -webkit-box-shadow: 0px 3px 5px -2px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0px 3px 5px -2px rgba(0,0,0,0.25);
+    box-shadow: 0px 3px 5px -2px rgba(0,0,0,0.25);
         img {
             max-width: 100%;
         }
 
         h2 {
+            
             font-weight: bold;
         }
 
@@ -50,6 +73,11 @@ body{
         .btn--basic, .badge--publication {
             border-radius: 0px;
             color: #fff;
+            text-decoration: none;
+            &:hover {
+                background-color:#000;
+            }
+            
         }
 
         .btn--read, .badge--publication {
@@ -59,10 +87,15 @@ body{
         .btn--bookmark {
             background-color: $med-complimentary;
         }
+        
 
         .btn--bookmark.bookmarked {
             background-color: $lt-neutral;
             color: $dk-neutral;
+            &:hover {
+                border: solid 1px $dk-neutral;
+                
+            }
         }
 
     }
@@ -85,7 +118,9 @@ body{
         li{
             list-style-type:none;
            // position: relative;
-            
+            i {
+                padding: 4px;
+            }
             &:hover > ul{
                 display: block;
                 margin: 0;
@@ -106,12 +141,17 @@ body{
             li{
                 list-style-type: none;
                 display: flex;
-                border: solid 1px #e5e5e5;
-                border-radius: 2px;
-                margin: 4px;
                 background: #fff;
                 &.currentPage a{
                     font-weight: 900;
+                }
+                a{
+                    font-weight: 500;
+                    color: $med-complimentary;
+                    text-decoration: none;
+                    &:hover{
+                        color: $dk-neutral;
+                    }
                 }
             }
         

@@ -47,7 +47,7 @@ class UserSignUp extends React.Component{
   
   render(){
     return(
-      <div className="col-4 mx-auto">
+      <div className="col-12 col-md-4 mx-auto">
         <h1 className="pt-5 pb-3">Sign Up for Access</h1>
         {this.state.creatingAccount !== false ? (
           <p className="alert alert-primary" role="alert">

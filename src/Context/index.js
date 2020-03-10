@@ -58,7 +58,7 @@ export class Provider extends Component {
         // Encode form values
         const encodedCredentials = btoa(`${user.emailAddress}:${user.password}`);
         // Set encoded values as authorization header in login request
-        const authorized = axios.get(`${config.apiBaseUrl}/api/users`, { user, headers: {"Authorization" : `Basic ${encodedCredentials}`} });
+        const authorized = axios.get(`${config.apiBaseUrl}/users`, { user, headers: {"Authorization" : `Basic ${encodedCredentials}`} });
         
         await authorized.then(                
             (response) => { 
@@ -109,7 +109,7 @@ export class Provider extends Component {
 
 
     signUp = async userInfo =>{
-        await axios.post(`${config.apiBaseUrl}/api/create-user`, userInfo);
+        await axios.post(`${config.apiBaseUrl}/create-user`, userInfo);
         this.setState({successfulSignUp: true });
 
 

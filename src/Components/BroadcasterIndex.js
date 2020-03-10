@@ -109,7 +109,7 @@ class BroadcasterIndex extends Component {
 		const requestStories = axios.get(`${config.apiBaseUrl}/stories/by-publication${path}`);
 		
 		//Set up request for current user's bookmarked stories
-		const requestBookmarks =  axios.get(`http://localhost:5000/api/${this.props.context.authenticatedUser.id}/bookmarks`);
+		const requestBookmarks =  axios.get(`${config.apiBaseUrl}/${this.props.context.authenticatedUser.id}/bookmarks`);
 
 		// .all allows for calling multiple endpoints
 		axios.all([requestStories, requestBookmarks]).then(axios.spread((...responses)=>{

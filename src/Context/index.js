@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import config from '../config';
 
 const Context = React.createContext(); 
 
@@ -11,6 +12,7 @@ export class Provider extends Component {
         this.state = {
             authenticatedUser: JSON.parse(localStorage.getItem('authenticatedUser')) || null,
             isLoggedIn: false,
+            successfulSignUp: false,
             allStories: []
         };
     }
@@ -19,14 +21,17 @@ export class Provider extends Component {
         
         const { authenticatedUser } = this.state;
         const { isLoggedIn } = this.state;
+        const { successfulSignUp } = this.state;
         const { allStories } = this.state;
         const value = {
             authenticatedUser,
             isLoggedIn,
             allStories,
+            successfulSignUp,
             actions: {
                 signIn: this.signIn,
                 signOut: this.signOut,
+                signUp: this.signUp,
                 updateStories: this.updateStories,
                 getAllStories: this.getAllStories
             },
@@ -53,7 +58,7 @@ export class Provider extends Component {
         // Encode form values
         const encodedCredentials = btoa(`${user.emailAddress}:${user.password}`);
         // Set encoded values as authorization header in login request
-        const authorized = axios.get('http://localhost:5000/api/users', { user, headers: {"Authorization" : `Basic ${encodedCredentials}`} });
+        const authorized = axios.get(`${config.apiBaseUrl}/api/users`, { user, headers: {"Authorization" : `Basic ${encodedCredentials}`} });
         
         await authorized.then(                
             (response) => { 
@@ -67,6 +72,7 @@ export class Provider extends Component {
                 // save encoded credentials for use in other API calls
                 localStorage.setItem('authHeader', encodedCredentials);
                 // Add authenticated user to the current state
+                this.setState({ 'successfulSignUp': false });
                 
                
             }).then((response)=>{
@@ -102,47 +108,12 @@ export class Provider extends Component {
     }
 
 
-    /**
-     * Fetch stories
-     */
-
-     async updateStories (){
-         console.log('bloop');
-        await axios.post('http://localhost:5000/api/stories')
-                    .then((response)=>{console.log('from context', response)});
-        
-            //console.log(this.getAllStories());
-        
-     }
+    signUp = async userInfo =>{
+        await axios.post(`${config.apiBaseUrl}/api/create-user`, userInfo);
+        this.setState({successfulSignUp: true });
 
 
-     /**
-      * Re-render stories
-      */
-
-     getAllStories = ()=>{
-         console.log('gets stories');
-        const currComponent = this;
-        axios.get('http://localhost:5000/api/stories')
-            .then(function (response) {
-              //  console.log(response);
-                // handle success
-                currComponent.setState({
-                    allStories: response.data
-                });
-                console.log(response);
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
-            .then(function () {
-                // always executed
-            });
     }
-
-
-
 }
 
 export const Consumer = Context.Consumer;

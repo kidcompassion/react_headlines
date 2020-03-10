@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Link} from 'react-router-dom';
 class UserSignIn extends React.Component{
 	constructor(props){
 		super(props);
@@ -11,6 +11,10 @@ class UserSignIn extends React.Component{
 		}
 	}
 
+
+	componentDidMount(){
+		
+	}
 	
 	/**
 	 * Grab form input and put it into state
@@ -43,6 +47,9 @@ class UserSignIn extends React.Component{
     return(
       <div className="col-4 mx-auto pt-5">
 				<h1 className ="pb-3">Sign In</h1>
+				{this.props.context.successfulSignUp !== false ? (
+				<p className="alert alert-success" role="alert">You've successfully signed up! Now sign in below.</p>
+				): ('')}
 				<form onSubmit={this.handleSubmit}>
 						<div className="form-group">
 								<label htmlFor="exampleInputEmail1">Email address</label>
@@ -65,6 +72,7 @@ class UserSignIn extends React.Component{
 						</div>
 						<button type="submit" className="btn btn-primary">Submit</button>
 				</form>
+				<p className="pt-3">Don't have a user account? <Link to="/signup">Click here</Link> to sign up!</p>
 		</div>
     )
   }

@@ -3,6 +3,7 @@ import { Redirect, withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 import BroadcasterStory from './BroadcasterStory';
 import { withContext }  from './../Context';
+import config from '../config';
 
 const StoryWithContext = withContext(BroadcasterStory);
 
@@ -105,7 +106,7 @@ class BroadcasterIndex extends Component {
 	getPubStories = (path, currPage)=>{
 
 		//Set up request for stories
-		const requestStories = axios.get(`http://localhost:5000/api/stories/by-publication${path}`);
+		const requestStories = axios.get(`${config.apiBaseUrl}/stories/by-publication${path}`);
 		
 		//Set up request for current user's bookmarked stories
 		const requestBookmarks =  axios.get(`http://localhost:5000/api/${this.props.context.authenticatedUser.id}/bookmarks`);
@@ -160,16 +161,14 @@ class BroadcasterIndex extends Component {
 	 * Retrieve all bookmarked stories for current user
 	 */
 	getAllBookmarks = (currPage) =>{  
-		//console.log('is this working');
-		//console.log(currPage);
 		const currComponent = this;
-		console.log('fires');
+
 			// Get all stories from user's bookmarks endpoint
-			axios.get(`http://localhost:5000/api/${this.props.context.authenticatedUser.id}/bookmarks/${currPage}`)
+			axios.get(`${config.apiBaseUrl}/${this.props.context.authenticatedUser.id}/bookmarks/${currPage}`)
 				.then(function (response) {
 					
 					const stories = response.data.rows;
-					console.log(stories);
+
 					// Filter to add the 'isBookmarked' state on the fly
 					stories.filter(story=>{
 						story.isBookmarked = true;
@@ -198,9 +197,9 @@ class BroadcasterIndex extends Component {
 	 */
 	getAllStories = (currPage)=>{
 		//Set up request for stories
-		const requestStories = axios.get(`http://localhost:5000/api/stories/${currPage}`);
+		const requestStories = axios.get(`${config.apiBaseUrl}/stories/${currPage}`);
 		//Set up request for current user's bookmarked stories
-		const requestBookmarks =  axios.get(`http://localhost:5000/api/${this.props.context.authenticatedUser.id}/bookmarks`);
+		const requestBookmarks =  axios.get(`${config.apiBaseUrl}/${this.props.context.authenticatedUser.id}/bookmarks`);
 
 		// .all allows for calling multiple endpoints
 		axios.all([requestStories, requestBookmarks]).then(axios.spread((...responses)=>{
@@ -263,7 +262,7 @@ class BroadcasterIndex extends Component {
 	 */
 
 	 lastUpdate = () =>{
-		 const lastUpdateAt = axios.get('http://localhost:5000/api/last-update');
+		 const lastUpdateAt = axios.get(`${config.apiBaseUrl}/last-update`);
 
 		 lastUpdateAt.then((results)=>{
 			 this.setState({ lastUpdated: results.data[0]});

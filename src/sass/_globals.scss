@@ -21,8 +21,10 @@ body{
     background-color: $dk-neutral;
     ul{
         margin-bottom: 0;
-        justify-content: space-evenly;
-        width: 70%;
+        @media (min-width: $breakpoint-sm){
+            justify-content: space-evenly;
+        }
+        
         li {
             list-style-type: none;
             display: flex;
@@ -126,6 +128,7 @@ body{
                 margin: 0;
                 padding:0;
                 background-color: $dk-neutral;
+                width: 100%;
             }
 
             a{

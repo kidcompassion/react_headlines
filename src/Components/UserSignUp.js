@@ -9,6 +9,7 @@ class UserSignUp extends React.Component{
     this.state = {
       emailAddress:"",
       password:"",
+      creatingAccount: false
   }
 
     this.handleChange = this.handleChange.bind(this);
@@ -28,12 +29,13 @@ class UserSignUp extends React.Component{
     event.preventDefault();
    // console.log(this.state);
    const signUp = this.props.context.actions.signUp(this.state);
-
+    this.setState({'creatingAccount': true});
     signUp.then((errors)=>{
       if(errors!== undefined){
         console.log(errors);
       } else{
         console.log('success');
+        this.setState({'creatingAccount': false});
         this.props.history.push('/signin');
       }
     })
@@ -47,6 +49,12 @@ class UserSignUp extends React.Component{
     return(
       <div className="col-4 mx-auto">
         <h1 className="pt-5 pb-3">Sign Up for Access</h1>
+        {this.state.creatingAccount !== false ? (
+          <p className="alert alert-primary" role="alert">
+          Creating your account...
+        </p>
+				): ('')}
+       
         <form onSubmit={this.handleSignUp}>
 					<div className="form-group">
 							<label htmlFor="emailAddress">Email address</label>

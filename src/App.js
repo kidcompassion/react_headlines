@@ -41,6 +41,7 @@ function App() {
           <PrivateRouteWithContext exact path="/edmonton-journal/:id" component={BroadcasterIndexWithContext} />
           <PrivateRouteWithContext exact path="/edmonton-sun/:id" component={BroadcasterIndexWithContext} />
           <PrivateRouteWithContext exact path="/cbc-edmonton/:id" component={BroadcasterIndexWithContext} />
+          <PrivateRouteWithContext exact path="/the-star-edmonton/:id" component={BroadcasterIndexWithContext} />
           
           <PrivateRouteWithContext exact path="/bookmarks/:id" component={BroadcasterIndexWithContext} />
           

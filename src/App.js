@@ -9,10 +9,11 @@ import NotFound from './Components/NotFound';
 import Forbidden from './Components/Forbidden';
 import PrivateRoute from './PrivateRoute';
 import { withContext }  from './Context';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 
 const UserSignInWithContext = withContext(UserSignIn);
+const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignOutWithContext = withContext(UserSignOut);
 const BroadcasterIndexWithContext = withContext(BroadcasterIndex);
 const HeaderWithContext = withContext(Header);
@@ -31,8 +32,9 @@ function App() {
 
           
          
+          <Redirect exact path="/" to ="/stories/1"/>
           <PrivateRouteWithContext exact path="/stories/:id" component={BroadcasterIndexWithContext} />
-          <Route exact path="/signup" component={UserSignUp} />
+          <Route exact path="/signup" component={UserSignUpWithContext} />
           <Route exact path="/signin" component={UserSignInWithContext} />
           <PrivateRouteWithContext exact path="/signout" component={UserSignOutWithContext} />
           <PrivateRouteWithContext exact path="/ctv-edmonton/:id" component={BroadcasterIndexWithContext} />

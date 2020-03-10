@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 class UserSignUp extends React.Component{  
 
@@ -24,13 +24,18 @@ class UserSignUp extends React.Component{
    
   }
 
-  handleSignUp = (event) =>{
+  handleSignUp =  event  =>{
     event.preventDefault();
    // console.log(this.state);
-    const signUp = axios.post(`http://localhost:5000/api/create-user`, this.state);
+   const signUp = this.props.context.actions.signUp(this.state);
 
     signUp.then((errors)=>{
-      this.props.history.push('/signin');
+      if(errors!== undefined){
+        console.log(errors);
+      } else{
+        console.log('success');
+        this.props.history.push('/signin');
+      }
     })
     
     
@@ -64,6 +69,7 @@ class UserSignUp extends React.Component{
 					</div>
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
+        <p className= "pt-5 pb-5">Already a user? <Link to="/signin">Sign in for access.</Link></p>
       </div>
     )
   }

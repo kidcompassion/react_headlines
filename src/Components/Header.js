@@ -5,6 +5,7 @@ const Header = (props) => {
   return(
 		<nav className="navbar navbar-dark component--navbar">
 			<div className="container-fluid">
+			{ props.context.authenticatedUser !== null ? ( 
 			<ul className="row"> 
 					<li className="col-12 col-lg-2"><Link to="/stories/1" className="navbar-brand">News App</Link></li>
 					<li className="col-12 col-lg-2"><Link to="/edmonton-journal/1">Edmonton Journal</Link></li>
@@ -13,6 +14,7 @@ const Header = (props) => {
 					<li className="col-12 col-lg-2"><Link to="/cbc-edmonton/1">CBC Edmonton</Link></li>
 					<li className="col-12 col-lg-2"><Link to="/the-star-edmonton/1">The Star</Link></li>
 			</ul>
+			):('')}
 			{ props.context.authenticatedUser !== null ? ( 
 				<ul className="user--dropdown">
 						<li>{props.context.authenticatedUser.emailAddress} <i className="fa fa-chevron-down"></i> 

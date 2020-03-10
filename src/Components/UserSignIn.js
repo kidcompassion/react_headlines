@@ -45,7 +45,7 @@ class UserSignIn extends React.Component{
 
   render(){
     return(
-      <div className="col-4 mx-auto pt-5">
+      <div className="col-12 col-md-4 mx-auto pt-5">
 				<h1 className ="pb-3">Sign In</h1>
 				{this.props.context.successfulSignUp !== false ? (
 				<p className="alert alert-success" role="alert">You've successfully signed up! Now sign in below.</p>

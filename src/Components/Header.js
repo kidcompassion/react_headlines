@@ -11,6 +11,7 @@ const Header = (props) => {
 					<li className="col-12 col-lg-2"><Link to="/edmonton-sun/1">Edmonton Sun</Link></li>
 					<li className="col-12 col-lg-2"><Link to="/ctv-edmonton/1">CTV Edmonton</Link></li>
 					<li className="col-12 col-lg-2"><Link to="/cbc-edmonton/1">CBC Edmonton</Link></li>
+					<li className="col-12 col-lg-2"><Link to="/the-star-edmonton/1">The Star</Link></li>
 			</ul>
 			{ props.context.authenticatedUser !== null ? ( 
 				<ul className="user--dropdown">

@@ -5,13 +5,11 @@ class UserSignUp extends React.Component{
 
   constructor(props){
     super(props);
-
     this.state = {
       emailAddress:"",
       password:"",
       creatingAccount: false
-  }
-
+    }
     this.handleChange = this.handleChange.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
 
@@ -27,8 +25,7 @@ class UserSignUp extends React.Component{
 
   handleSignUp =  event  =>{
     event.preventDefault();
-   // console.log(this.state);
-   const signUp = this.props.context.actions.signUp(this.state);
+    const signUp = this.props.context.actions.signUp(this.state);
     this.setState({'creatingAccount': true});
     signUp.then((errors)=>{
       if(errors!== undefined){
@@ -39,10 +36,6 @@ class UserSignUp extends React.Component{
         this.props.history.push('/signin');
       }
     })
-    
-    
-    
-    
   }
   
   render(){

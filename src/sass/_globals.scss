@@ -5,9 +5,6 @@ body{
     background-blend-mode: multiply;
 }
 
-
-
-
 .App{
     color: #fff;
     a{
@@ -37,7 +34,6 @@ body{
             }
         }
     }
-    
 }
 
 
@@ -79,7 +75,6 @@ body{
             &:hover {
                 background-color:#000;
             }
-            
         }
 
         .btn--read, .badge--publication {
@@ -90,7 +85,6 @@ body{
             background-color: $med-complimentary;
         }
         
-
         .btn--bookmark.bookmarked {
             background-color: $lt-neutral;
             color: $dk-neutral;
@@ -99,11 +93,7 @@ body{
                 
             }
         }
-
     }
-
-
-
 
     ul.user--dropdown{
         color: #fff;
@@ -130,7 +120,6 @@ body{
                 background-color: $dk-neutral;
                 width: 100%;
             }
-
             a{
                 padding: 4px 8px;
             }
@@ -138,24 +127,23 @@ body{
     }
 
     .component--pagination{
-            padding:0;
+        padding:0;
+        display: flex;
+        flex-direction: row;
+        li{
+            list-style-type: none;
             display: flex;
-            flex-direction: row;
-            li{
-                list-style-type: none;
-                display: flex;
-                background: #fff;
-                &.currentPage a{
-                    font-weight: 900;
-                }
-                a{
-                    font-weight: 500;
-                    color: $med-complimentary;
-                    text-decoration: none;
-                    &:hover{
-                        color: $dk-neutral;
-                    }
+            background: #fff;
+            &.currentPage a{
+                font-weight: 900;
+            }
+            a{
+                font-weight: 500;
+                color: $med-complimentary;
+                text-decoration: none;
+                &:hover{
+                    color: $dk-neutral;
                 }
             }
-        
+        }
     }

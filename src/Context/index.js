@@ -18,7 +18,6 @@ export class Provider extends Component {
     }
 
     render() {
-        
         const { authenticatedUser } = this.state;
         const { isLoggedIn } = this.state;
         const { successfulSignUp } = this.state;
@@ -54,7 +53,6 @@ export class Provider extends Component {
      * {Object} User
      */
     signIn = async user =>{
-    // console.log(user);
         // Encode form values
         const encodedCredentials = btoa(`${user.emailAddress}:${user.password}`);
         // Set encoded values as authorization header in login request
@@ -62,7 +60,6 @@ export class Provider extends Component {
         
         await authorized.then(                
             (response) => { 
-               
                this.setState({
                    authenticatedUser: response.data,
                    isLoggedIn: true
@@ -73,14 +70,6 @@ export class Provider extends Component {
                 localStorage.setItem('authHeader', encodedCredentials);
                 // Add authenticated user to the current state
                 this.setState({ 'successfulSignUp': false });
-                
-               
-            }).then((response)=>{
-                //this.props.history.push('/stories/1');
-              // console.log(this.state);
-                //this.setState({authenticatedUser: response.data});
-              //  console.log('test', this);
-              //  this.props.history.push('/stories/1/');
             }).catch(
             (err)=>{
                 // If error, log it to the console
@@ -107,7 +96,6 @@ export class Provider extends Component {
         currentComponent.setState({authenticatedUser: null});   
     }
 
-
     signUp = async userInfo =>{
         await axios.post(`${config.apiBaseUrl}/create-user`, userInfo);
         this.setState({successfulSignUp: true });
@@ -133,4 +121,3 @@ export function withContext(Component) {
     );
   }
 }
-

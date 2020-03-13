@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-
-
   const PrivateRoute = ({ component: Comp, path, ...rest }) => {
     
   return (
@@ -10,8 +8,6 @@ import { Route, Redirect } from 'react-router-dom';
       <Route
     {...rest}
     render={props => {
-      //console.log(context)
-      console.log(rest)
       return rest.context.authenticatedUser!== null ? (
         <Comp {...props} />
       ) : (
